@@ -1,5 +1,7 @@
-<ul class="todoList">
-    <% for(var key in this) {%>
-    <li><%=this.title%></li>
+<ol class="todoList">
+    <% for(var i = 0; i < data.length; i++) {%>
+
+    <li><%=data[i]%></li>
+
     <% } %>
-</ul>
+</ol>
