@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <title>Document</title>
@@ -16,7 +17,19 @@
     <textarea name="" id="" cols="30" rows="10" class="someTextTascs"></textarea>
     <button class="addedTascs buttonStyle">Добавить Задачу</button>
 </form>
-<p></p>
+<ol class="todoList">
+    <% for(var i = 0; i < data.length; i++) {%>
+
+    <li>
+        <span><%=data[i].task%> </span>
+        <button class="deletedTasks buttonStyle" data-id-tasks="<%=data[i]._id%>">remove</button>
+        <button class="readTask buttonStyle">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+    </li>
+
+    <% } %>
+</ol>
 <script src="/js/common.js"></script>
 </body>
 </html>

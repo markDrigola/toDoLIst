@@ -1,36 +1,37 @@
-function router(app, express) {
+function router(app, express, mongoose) {
 
     app.set('view engine', 'ejs');
     app.use(express.static(__dirname + '/../public'));
 
-    var mongoose = require('mongoose');
+    var todoModel = require("../schemas/taskSchemas.js")(mongoose);
 
-    mongoose.connect('mongodb://localhost/toDoList');
-
-    var db = mongoose.connection;
-
-    db.on('open', function () {
-
-    });
-    var Schema = mongoose.Schema;
-
-    var todoSchema = new Schema({
-        text:  String
-    });
-
-
-    var todoSchema = mongoose.model('text', todoSchema);
+    // var testTasks = new todoModel({
+    //     task : "test text1",
+    //     time : 12312312,
+    //     status : true
+    // });
+    // testTasks.save();
 
     app.get('/', function (req, res) {
-        res.render('template');
+        todoModel.find(function (err, tasks) {
+            res.render('template', { data: tasks });
+        });
     });
 
-    app.get('/todo', function (req, res) {
-        var requestData = req.query;
+    app.get('/remove', function (req, res) {
+        var requestRemove = req.query;
+        todoModel.find(function (err, tasks) {
+            for(var i = 0; i < tasks.length; i ++) {
+                if(tasks[i]._id == requestRemove.remove) {
+                    tasks[i].remove();
+                }
+            }
 
-        var task = new todoSchema({
-            text:  requestData.text
         });
+    });
+
+    app.get('/added', function (req, res) {
+        var requestData = req.query;
 
             // todoSchema.find("text", function (err,task) {
             //     todoSchema.remove("text", function () {
@@ -39,21 +40,21 @@ function router(app, express) {
             //     res.render('partials/todo',{data: task});
             // });
 
-            task.save(function (err, task) {
-                if(err) {
-                    return console.error(err);
-                }
-                var tmpTasks = [];
-                todoSchema.find("text", function (err,task) {
-                    for(var i = 0; i < task.length; i++) {
-                        if(task[i].text !== "" && task[i].text !== undefined) {
-                            tmpTasks.push(task[i].text);
-                        }
-                    }
-                    res.render('partials/todo',{ data: tmpTasks });
-                });
-
-            });
+            // task.save(function (err, task) {
+            //     if(err) {
+            //         return console.error(err);
+            //     }
+            //     var tmpTasks = [];
+            //     todoSchema.find("text", function (err,task) {
+            //         for(var i = 0; i < task.length; i++) {
+            //             if(task[i].text !== "" && task[i].text !== undefined) {
+            //                 tmpTasks.push(task[i].text);
+            //             }
+            //         }
+            //         res.render('partials/todo',{ data: tmpTasks });
+            //     });
+            //
+            // });
 
 
 

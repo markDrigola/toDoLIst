@@ -67,5 +67,17 @@
 }
 
 .todoList li {
+    margin: 0 0 15px 10px;
     font-size: 16px;
+    min-height: 40px;
 }
+
+.todoList li span {
+    width: 72%;
+    display: inline-flex;
+}
+
+.deletedTasks {
+    float: right;
+}
+
