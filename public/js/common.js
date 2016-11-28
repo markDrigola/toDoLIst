@@ -20,14 +20,40 @@
 
             })
         });
+        var flag = 0;
+        $('.readTask').on('click', function () {
+             var redactElem = $(this).parent().children("span"),
+                 inputAddedText = $(this).parent().children("input"),
+                 button_idTask = $(this).attr("data-id-tasks");
+            if(flag === 1) {
+                flag = 0;
+                inputAddedText.hide();
+                $(this).children('.saveInput').hide();
+                $(this).children('.openInput').show();
+                if(inputAddedText.val() !== "") {
+                    redactElem.text(inputAddedText.val());
+                    $.ajax({
+                        url: "refact?refact=" + inputAddedText.val() + "&thisId=" + button_idTask +"",
+                        async: true
+                    }).done( function (data) {
+
+                    });
+                } else {
+                    return false;
+                }
+            } else if(flag === 0) {
+                flag = 1;
+                inputAddedText.show();
+                $(this).children('.saveInput').show();
+                $(this).children('.openInput').hide();
+            }
+        });
 
         $('.addedTascs').on('click', function (event) {
             var textVals = $('.someTextTascs').val();
             $('.someTextTascs').val('');
-            var delBut = "<button class='deletedTasks buttonStyle'><i class='fa fa-pencil'  aria-hidden='true'></i></button>";
-            var readBut = '<button class="deletedTasks buttonStyle" data-id-tasks="<%=data[i]._id%>">remove</button>';
 
-            $('.todoList').append("<li>" + textVals + "" + delBut + "" + readBut + "</li>");
+           // $('.todoList').append("<li>" + textVals + "</li>");
             $.ajax({
                 url:"/added?added="+ textVals +"",
                 async:true

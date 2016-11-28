@@ -70,6 +70,7 @@
     margin: 0 0 15px 10px;
     font-size: 16px;
     min-height: 40px;
+    position: relative;
 }
 
 .todoList li span {
@@ -81,3 +82,13 @@
     float: right;
 }
 
+.readText {
+    position: absolute;
+    right: 200px;
+    display: none;
+    top: 10px;
+}
+
+.saveInput {
+    display: none;
+}

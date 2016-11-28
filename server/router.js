@@ -26,12 +26,33 @@ function router(app, express, mongoose) {
                     tasks[i].remove();
                 }
             }
-
         });
+    });
+
+    app.get('/refact', function (req, res) {
+        var requestRemove = req.query;
+        console.log(requestRemove.refact);
+        console.log(requestRemove.thisId);
+        todoModel.find(function (err, tasks) {
+            for(var i = 0; i < tasks.length; i++) {
+                if(tasks[i]._id == requestRemove.thisId) {
+                    tasks[i].task = requestRemove.refact;
+                    tasks[i].save();
+                }
+            }
+        })
     });
 
     app.get('/added', function (req, res) {
         var requestData = req.query;
+
+        var testTasks = new todoModel({
+            task : requestData.added,
+            time : 12312312,
+            status : true
+        });
+
+        testTasks.save();
 
             // todoSchema.find("text", function (err,task) {
             //     todoSchema.remove("text", function () {

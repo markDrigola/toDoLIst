@@ -18,17 +18,7 @@
     <button class="addedTascs buttonStyle">Добавить Задачу</button>
 </form>
 <ol class="todoList">
-    <% for(var i = 0; i < data.length; i++) {%>
-
-    <li>
-        <span><%=data[i].task%> </span>
-        <button class="deletedTasks buttonStyle" data-id-tasks="<%=data[i]._id%>">remove</button>
-        <button class="readTask buttonStyle">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-        </button>
-    </li>
-
-    <% } %>
+    <%include partials/todo%>
 </ol>
 <script src="/js/common.js"></script>
 </body>
