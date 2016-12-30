@@ -1,4 +1,4 @@
-function router(app, express, mongoose) {
+function router(app, express, mongoose,angulars) {
 
     app.set('view engine', 'ejs');
     app.use(express.static(__dirname + '/../public'));
@@ -11,6 +11,10 @@ function router(app, express, mongoose) {
     //     status : true
     // });
     // testTasks.save();
+
+    //var angularsModel = angular.module("angularsModel", []);
+    //
+
 
     app.get('/', function (req, res) {
         todoModel.find(function (err, tasks) {
@@ -31,8 +35,7 @@ function router(app, express, mongoose) {
 
     app.get('/refact', function (req, res) {
         var requestRemove = req.query;
-        console.log(requestRemove.refact);
-        console.log(requestRemove.thisId);
+
         todoModel.find(function (err, tasks) {
             for(var i = 0; i < tasks.length; i++) {
                 if(tasks[i]._id == requestRemove.thisId) {
@@ -41,6 +44,23 @@ function router(app, express, mongoose) {
                 }
             }
         })
+    });
+
+    app.get('/todoFilter', function (req, res) {
+        var requestFilter = req.query.filter;
+        var re = new RegExp(inputValFilter, 'i');
+
+
+        console.log(inputValFilter.match(re))
+        todoModel.find( function (err, listTask) {
+            for(var i = 0; i < listTask.length; i++) {
+                // for (var key in listTask[i]) {
+                    console.log(listTask[i].task );
+                // }
+
+            }
+            // requestFilter
+        });
     });
 
     app.get('/added', function (req, res) {
@@ -53,7 +73,7 @@ function router(app, express, mongoose) {
         });
 
         testTasks.save();
-
+        res.send(requestData.added);
             // todoSchema.find("text", function (err,task) {
             //     todoSchema.remove("text", function () {
             //         console.log(task)

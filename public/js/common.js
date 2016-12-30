@@ -58,21 +58,30 @@
                 url:"/added?added="+ textVals +"",
                 async:true
             }).done( function(data) {
-
+                console.log(data)
+                $('.todoList').append('<li>' + data + '<span class="newTascs">' + ' Это новая задача !' + '</span>' + '</li>');
             });
         });
         $("form").submit( function(event){
             event.preventDefault();
         });
 
-        // var objNe = {
-        //     first: 123,
-        //     second: 'test'
-        // }
-        //
-        // for( var key in objNe) {
-        //     console.log(key)
-        //     console.log(objNe[key])
-        // }
+        $('.filterInput').keyup( function () {
+            var inputValFilter = $(this).val();
+
+            var re = new RegExp(/[inputValFilter]/, 'i');
+
+var str = 'aaaassss';
+            console.log(str.match())
+            $.ajax({
+                url:"/todoFilter?filter="+ inputValFilter +"",
+                async:true
+            }).done( function(data) {
+                // $('.test').html(data);
+            });
+        });
+        // $('.textAdd').on('keydown', function () {
+        //     socket.emit('chat message change', true, nameUserCookie);
+        // });
     });
 })();
