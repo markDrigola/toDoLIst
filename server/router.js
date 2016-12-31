@@ -4,7 +4,7 @@ function router(app, express, mongoose,angulars) {
     app.use(express.static(__dirname + '/../public'));
 
     var todoModel = require("../schemas/taskSchemas.js")(mongoose);
-
+    // todoModel.remove();
     // var testTasks = new todoModel({
     //     task : "test text1",
     //     time : 12312312,
@@ -17,6 +17,7 @@ function router(app, express, mongoose,angulars) {
 
 
     app.get('/', function (req, res) {
+
         todoModel.find(function (err, tasks) {
             res.render('template', { data: tasks });
         });
@@ -47,20 +48,23 @@ function router(app, express, mongoose,angulars) {
     });
 
     app.get('/todoFilter', function (req, res) {
-        var requestFilter = req.query.filter;
-        var re = new RegExp(inputValFilter, 'i');
+        var requestFilter = req.query.filter,
+            arrTask = [],
+            re = new RegExp(requestFilter),
+            thuiTaskObt;
 
-
-        console.log(inputValFilter.match(re))
         todoModel.find( function (err, listTask) {
+            thuiTaskObt = '';
             for(var i = 0; i < listTask.length; i++) {
-                // for (var key in listTask[i]) {
-                    console.log(listTask[i].task );
-                // }
-
+                thuiTaskObt = listTask[i].task.match(re);
+                if(thuiTaskObt !== null) {
+                    arrTask.push(listTask[i]);
+                }
             }
-            // requestFilter
+            res.render('partials/todo', {data: arrTask});
+            return false;
         });
+        return false;
     });
 
     app.get('/added', function (req, res) {
